@@ -154,7 +154,7 @@ function jsFunction(){
 
 function checkRisk(lat, lng) {
   var request = new XMLHttpRequest();
-  request.open("GET", "http://www.cin.ufpe.br/~jmxnt/prf/check.php?lat=" + lat + "&lng=" + lng, false);
+  request.open("GET", "http://www.cin.ufpe.br/~jmxnt/prfmvp/server/check.php?lat=" + lat + "&lng=" + lng, false);
   request.send(null);
   //alert(request.responseText);
   homeControlDiv3.innerHTML = counter++ + ":" + request.responseText;
@@ -179,7 +179,7 @@ function showPosition(position) {
 
   if(userMarker == null) {
     //var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-    var iconBase = 'http://www.cin.ufpe.br/~jmxnt/prf/';
+    var iconBase = 'http://www.cin.ufpe.br/~jmxnt/prfmvp/';
 
     userMarker = new google.maps.Marker({
       position: myLatlng,
