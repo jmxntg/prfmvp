@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="images/icone.png">
+    <link rel="stylesheet" href="css/add2home.css">
+    <script type="application/javascript" src="scripts/add2home.js"></script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>PRF Alerta</title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+      #panel {
+        position: absolute;
+        width: 100%;
+        height: 28px;
+        top: 5px;
+        left: 10%;
+        margin-left: 0px;
+        z-index: 5;
+        background-color: #A6CE39;
+        padding: 5px;
+        border: 1px solid #88AB2F;
+      }
+      #button1 {
+        position: absolute;
+        width: 60px;
+        height: 28px;
+        top: 0px;
+        left: 2px;
+        margin-left: 0px;
+        z-index: 5;
+        background-color: #A6CE39;
+        padding: 5px;
+        border: 0px solid #88AB2F;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+var map, layer;
+var layers = new Array();
+var userMarker = null;
+var lastLat = 0;
+var lastLng = 0;
+var counter = 0;
+var audioOk;
+var audioWarning;
+
+var homeControlDiv2;
+var homeControlDiv3;
+var menubar;
+
+var myLatlng = null;
+
+var alertSwitch = true;
+
+function toggleAlert() {
+  if(alertSwitch == true) {
+    alertSwitch = false;
+  } else {
+    alertSwitch = true;
+  }
+}
+
+function locateMe() {
+//  alert("teste!");
+  if(myLatlng != null) map.setCenter(myLatlng);
+}
+
+function initialize() {
+
+  if (navigator.geolocation) {
+    navigator.geolocation.watchPosition(showPosition);
+    audioOk = new Audio("tahtranquilo.mp3");
+    audioOk.load();
+    audioOk.play();
+    audioOk.pause();
+
+    audioWarning = new Audio("cuidado.mp3");
+    audioWarning.load();
+    audioWarning.play();
+    audioWarning.pause();
+  }
+
+  var chicago = new google.maps.LatLng(-8.494105,-37.662849);
+
+  map = new google.maps.Map(document.getElementById('map-canvas'), {
+    center: chicago,
+    zoom: 8,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    streetViewControl: false,
+    panControl: false,
+    overviewMapControl: false,
+    zoomControl: false,
+    mapTypeControl: false
+  });
+
+  var homeControlDiv = document.createElement('div');
+  var homeControl = new HomeControl(homeControlDiv, map);
+
+  homeControlDiv.index = 1;
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
+
+  homeControlDiv2 = document.createElement('div');
+  homeControlDiv2.innerHTML = "XEMBA!";
+  homeControlDiv2.style.backgroundColor = 'white';
+  homeControlDiv2.index = 1;
+  map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(homeControlDiv2);
+
+  menubar = document.createElement('div');
+  menubar.id = "panel";
+  menubar.innerHTML = "<div id=\"button1\"><img src=\"images/posicao.png\" width=\"26\" height=\"26\" onclick=\"locateMe();\"> <img src=\"images/alerta_off.png\" width=\"26\" height=\"26\" onclick=\"toggleAlert();\"></div><center><img src=\"images/logo.png\" witdh=\"97\" height=\"26\"></center>";
+  menubar.index = 1;
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(menubar);
+
+  homeControlDiv3 = document.createElement('div');
+  homeControlDiv3.innerHTML = "<img src=\"images/logo.png\">";
+  homeControlDiv3.index = 1;
+  //homeControlDiv3.style.backgroundColor = 'white';
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(homeControlDiv3);
+
+  changeMap("BR", "1f5xInZS29XqJPSWhkoIC7QuMCWOXBIOnKePrBqM");
+}
+
+function changeMap(state, id) {
+  if(layers[state]==null) {
+    layers[state] = new google.maps.FusionTablesLayer({
+      query: {
+        select: '\'location\'',
+        from: id
+      }
+    });
+  }
+
+  for (var key in layers) {
+    if(key != state) {
+      layers[key].setMap(null);
+    } else {
+      layers[key].setMap(map);
+    }
+  }
+}
+
+function jsFunction(){
+  var myselect = document.getElementById("selectOpt");
+  var state = myselect.options[myselect.selectedIndex].innerHTML;
+  var id = myselect.options[myselect.selectedIndex].value;
+  changeMap(state, id);
+}
+
+function checkRisk(lat, lng) {
+  var request = new XMLHttpRequest();
+  request.open("GET", "http://www.cin.ufpe.br/~jmxnt/prf/check.php?lat=" + lat + "&lng=" + lng, false);
+  request.send(null);
+  //alert(request.responseText);
+  homeControlDiv3.innerHTML = counter++ + ":" + request.responseText;
+  if(alertSwitch == true) {
+    if(request.response == "RISKY") {
+      //audioWarning.currentTime = 0;
+      audioWarning.play();
+    } else {
+      //audioOk.currentTime = 0;
+      audioOk.play();
+    }
+  }
+}
+
+function showPosition(position) {
+
+  var lat = position.coords.latitude;
+  var lng = position.coords.longitude;
+  myLatlng = new google.maps.LatLng(lat,lng);
+
+  homeControlDiv2.innerHTML = lat + " " + lng;
+
+  if(userMarker == null) {
+    //var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var iconBase = 'http://www.cin.ufpe.br/~jmxnt/prf/';
+
+    userMarker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      title: 'Posição atual',
+      icon: iconBase + 'images/car.png'
+    });
+  }
+
+  userMarker.setPosition(myLatlng);
+  //map.setCenter(myLatlng);
+  if((Math.abs(lat - lastLat) > 0.001) || (Math.abs(lng - lastLng) > 0.001)) {
+    checkRisk(position.coords.latitude,position.coords.longitude);
+    lastLat = lat;
+    lastLng = lng;
+  }
+}
+
+function HomeControl(controlDiv, map) {
+
+  // Set CSS styles for the DIV containing the control
+  // Setting padding to 5 px will offset the control
+  // from the edge of the map
+  controlDiv.style.padding = '5px';
+
+  // Set CSS for the control border
+  var controlUI = document.createElement('div');
+  //controlUI.style.backgroundColor = 'white';
+  controlUI.style.borderStyle = 'none';
+  //controlUI.style.borderWidth = '2px';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.textAlign = 'center';
+  //controlUI.title = 'Click to set the map to Home';
+  controlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior
+  var controlText = document.createElement('div');
+  controlText.style.fontFamily = 'Arial,sans-serif';
+  controlText.style.fontSize = '12px';
+  controlText.style.paddingLeft = '4px';
+  controlText.style.paddingRight = '4px';
+  controlText.innerHTML = '<select onChange=\"jsFunction()\" id=\"selectOpt\"><option value=\"1f5xInZS29XqJPSWhkoIC7QuMCWOXBIOnKePrBqM\">BR</option><option value=\"13oc75bQLyIMh5qQhAh6DkPKb7iClzpe0VDmTjwY\">AC</option><option value=\"1yWz4lasP7FkTeMtdAZMIyPIwhwHCMhfGokdwcnE\">AL</option><option value=\"1tx2BC2xD3RuG1UqMpxes2rtnEkXEjaxHaBDw49Y\">AM</option><option value=\"1QuDlB-VAPU1jtMkwFr7-9oR7er0UhZXNT11Siug\">AP</option><option value=\"1fTAySRqbrcp72QJO7t4c7AGL00wPNjyvgikwGq0\">BA</option><option value=\"1b4BYeznXxL3gUjcrMf3gDTbIgjSfmILGu2POhG0\">CE</option><option value=\"1z89anT2sHQEfDvyGemSru5EAdRyOw97wJujTHSQ\">DF</option><option value=\"1_r5lc5mqHXqCoC6w20Czss3u7JXRkngjppRISlU\">ES</option><option value=\"1QNZ8mBIdb6E_VTyN6fu9mfOLMHqw4ziIY57R-3I\">GO</option><option value=\"1j1zX_gJJoYt9ZDTyb6m4BqBr21M4FerwiH9sl10\">MA</option><option value=\"1Q1mbYoiVXZF3z_nCMvMGKv9RCcPK7PQV5L9VAu8\">MG</option><option value=\"1WSZ1AyGNUUl3W1c03kGYCx1jcTDcgJks5Sj0CCM\">MS</option><option value=\"1r6XIRPRFQf1fT1cXiY_BTnQfRPG_0On2FHlx8sg\">MT</option><option value=\"1D2uYOzanoKno-VCWGZvm8J_zd2f4LY4tyto6oeY\">PA</option><option value=\"1NsAzqO7mrYNISHy3ECMFPIo1PmMzZ2onDCHpRW4\">PB</option><option value=\"1lnMwhze-pnxnEhEA1Mn5mswoQaSovZSu7cJ4ax8\">PE</option><option value=\"1Kaz1LlEd9FojSjZ0-0lFxOiwcYkAdtFA2hb5i_Y\">PI</option><option value=\"1HM42F_QI1skIPg9ZdkIHCq0vl0d3HD86BMNSedc\">PR</option><option value=\"1E2mscvvbi4r3wDrOxJNuy-hrL0Ze0BQ31IF8FnA\">RJ</option><option value=\"1BHOx7PFz2ke3gNq5BNL8JT7yS-UTsaN6_Vtq930\">RN</option><option value=\"17XSEPTkBmg4SnRoYBThNc3R27dVv3MwnYRD4opM\">RO</option><option value=\"1wxGcfP3TAP_4gyshYfT2lkw865r67JmuRqHDwvk\">RR</option><option value=\"1bXQpKsjWal8B1vyvTSSzpLLc3ZBumyIhTZse13w\">RS</option><option value=\"1YBfkO9kUO5AUxulNRIRnz_EZGZvCAk4J_tp0IXs\">SC</option><option value=\"1SYJBdvWiZi8OIqaZo8dBwudCb8s8j0aDcvjOSFw\">SE</option><option value=\"1IO41fAr6TW5ygxyDncVNjM2P0xzanBCerPpsIW8\">SP</option><option value=\"1PQeer0P8C5-Uadc2T0asMFTggO9UMGvHJDIm3mo\">TO</option></select>';
+  controlUI.appendChild(controlText);
+
+  // Setup the click event listeners: simply set the map to
+  // Chicago
+  google.maps.event.addDomListener(controlUI, 'click', function() {
+    map.setCenter(chicago)
+  });
+
+}
+
+
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>
