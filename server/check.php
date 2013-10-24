@@ -1,5 +1,22 @@
 <?php
 
+//	Server file of the web application 'PRF Alerta' for the 2nd Brazilian National Contest MJ/W3C over open PRF data.
+//	Copyright (C) 2013  Authors: João Marcelo Teixeira, Mozart Almeida, Edvar Neto, Artur Santos
+
+//	This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU Affero General Public License as
+//    published by the Free Software Foundation, either version 3 of the
+//    License, or (at your option) any later version.
+
+//   This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU Affero General Public License for more details.
+
+//    You should have received a copy of the GNU Affero General Public License
+//    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
 function distance($lat1, $lng1, $lat2, $lng2) { // distance in km
   $earthRadius = 3958.75;
   $dLat = deg2rad($lat2-$lat1);
