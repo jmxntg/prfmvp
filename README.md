@@ -18,8 +18,8 @@ Onde pode ser executado?
 	Internet e utilize um browser compatível com HTML5 e Javascript.
 	
 	Durante o desenvolvimento ele foi testado em computadores de mesa em diversos browsers 
-	(IE, Firefox, Chrome e Opera), em um Iphone 4 e em um smartphone Android 4, porém deverá executar normalmente em 
-	outros dispositivos da família Apple (Iphone, Ipad) e da Microsoft (Windows Phone).
+	(IE, Firefox, Chrome e Opera), em um Iphone 4 e em um smartphone Android 4, porém deverá executar
+	normalmente em outros dispositivos da família Apple (Iphone, Ipad) e da Microsoft (Windows Phone).
 
 Como funciona?
 
