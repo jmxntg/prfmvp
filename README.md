@@ -18,8 +18,8 @@ Onde pode ser executado?
 	Internet e utilize um browser compatível com HTML5 e Javascript.
 	
 	Durante o desenvolvimento ele foi testado em computadores de mesa em diversos navegadores 
-	(IE, Firefox, Chrome e Opera), em um Iphone 4 e em um smartphone Android 4, porém deverá executar
-	normalmente em outros dispositivos da família Apple (Iphone, Ipad) e da Microsoft (Windows Phone).
+	(IE, Firefox, Chrome e Opera) e em um Iphone 4, porém deverá executar normalmente em outros
+	dispositivos da família Apple (Iphone, Ipad), Android e Microsoft (Windows Phone).
 
 Como funciona?
 
@@ -36,8 +36,8 @@ Como funciona?
 	
 	Além de visualizar as informações de ocorrências pelo Brasil, o usuário pode optar pela
 	visualização das informações por estado isoladamente, tornando o acompanhamento mais preciso.
-	Essa seleção é feita através de um menu localizado na parte superior da aplicação, em que podem
-	ser visualizados todos os pontos do país (opção "BR") ou por estado individual.	
+	Essa seleção é feita através de um menu localizado na parte superior direito da aplicação, em que 
+	podem ser visualizados todos os pontos do país (opção "BR") ou por estado individualmente.	
 	
 	Quando o usuário entrar em uma área de risco, o aplicativo emitirá um AVISO SONORO informando
 	que a partir daquele trecho, ele precisa ter mais cuidado, pois a taxa de incidências das
