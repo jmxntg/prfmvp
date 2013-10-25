@@ -34,8 +34,11 @@ Como funciona?
 	mais precisa. Caso o dispositivo não possua GPS ou o usuário não autorize o compartilhamento da sua
 	localização, a aplicação funcionará como visualizador dos pontos críticos registrados pela PRF.
 	
-	Além de visualizar as informações de ocorrências pelo Brasil, o usuário pode optar pela
-	visualização das informações por estado isoladamente, tornando o acompanhamento mais preciso.
+	Se o usuário clicar num dos pontos de ocorrência exibidos no mapa, uma pequena janela contendo o 
+	endereço daquele local, bem como uma imagem daquele local (quando disponibilizado pelo Google).
+	
+	Além de visualizar as informações de localização de ocorrências pelo Brasil, o usuário pode optar 
+	pela visualização delas por estado de forma isolada, tornando o acompanhamento mais preciso.
 	Essa seleção é feita através de um menu localizado na parte superior direita da aplicação, em que 
 	podem ser visualizados todos os pontos do país (opção "BR") ou por estado individualmente.	
 	
