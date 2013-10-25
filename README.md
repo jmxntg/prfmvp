@@ -48,8 +48,8 @@ Como funciona?
 	
 Alerta sonoro no iOS:
 
-	Para que o alerta sonoro seja habilitado no iOS, o usuário deverá acessar o endereço da aplicação no
-	Safari, e em seguida adicioná-la na tela inicial do aparelho através da opção "add to home". Com isso,
-	a aplicação será "instalada" junto aos ícones locais do dispositivo, dando permissão para a reprodução
-	automática dos sons.
+	Para que o alerta sonoro seja habilitado no iOS, o usuário deverá acessar o endereço da aplicação 
+	no navegador Safari, e em seguida adicioná-la na tela inicial do aparelho através da opção
+	"add to home". Com isso, a aplicação será "instalada" junto aos ícones locais do dispositivo, 
+	dando permissão para a reprodução automática dos sons.
 	
