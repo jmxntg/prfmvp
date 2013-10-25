@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <!--
 	Client file of the web application 'PRF Alerta' for the 2nd Brazilian National Contest MJ/W3C over open PRF data.
 	Copyright (C) 2013  Authors: João Marcelo Teixeira, Mozart Almeida, Edvar Neto, Artur Santos
@@ -17,7 +15,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-
 <html>
   <head>
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -69,7 +66,7 @@ var counter = 0;
 var audioOk;
 var audioWarning;
 
-var homeControlDiv2;
+//var homeControlDiv2;
 var homeControlDiv3;
 var menubar;
 
@@ -105,11 +102,11 @@ function initialize() {
     audioWarning.pause();
   }
 
-  var chicago = new google.maps.LatLng(-8.494105,-37.662849);
+  var chicago = new google.maps.LatLng(-11.436955,-52.301788);
 
   map = new google.maps.Map(document.getElementById('map-canvas'), {
     center: chicago,
-    zoom: 8,
+    zoom: 3,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     streetViewControl: false,
     panControl: false,
@@ -124,11 +121,11 @@ function initialize() {
   homeControlDiv.index = 1;
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
 
-  homeControlDiv2 = document.createElement('div');
-  homeControlDiv2.innerHTML = "XEMBA!";
-  homeControlDiv2.style.backgroundColor = 'white';
-  homeControlDiv2.index = 1;
-  map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(homeControlDiv2);
+  //homeControlDiv2 = document.createElement('div');
+  //homeControlDiv2.innerHTML = "XEMBA!";
+  //homeControlDiv2.style.backgroundColor = 'white';
+  //homeControlDiv2.index = 1;
+  //map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(homeControlDiv2);
 
   menubar = document.createElement('div');
   menubar.id = "panel";
@@ -142,7 +139,7 @@ function initialize() {
   //homeControlDiv3.style.backgroundColor = 'white';
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(homeControlDiv3);
 
-  changeMap("BR", "1f5xInZS29XqJPSWhkoIC7QuMCWOXBIOnKePrBqM");
+  changeMap("BR", "10Fx4UDObxHx5eCD8N_1TQ27Y1YuFg6wc5f9_AQs");
 }
 
 function changeMap(state, id) {
@@ -194,7 +191,7 @@ function showPosition(position) {
   var lng = position.coords.longitude;
   myLatlng = new google.maps.LatLng(lat,lng);
 
-  homeControlDiv2.innerHTML = lat + " " + lng;
+  //homeControlDiv2.innerHTML = lat + " " + lng;
 
   if(userMarker == null) {
     //var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
