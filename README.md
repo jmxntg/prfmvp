@@ -36,7 +36,7 @@ Como funciona?
 	
 	Além de visualizar as informações de ocorrências pelo Brasil, o usuário pode optar pela
 	visualização das informações por estado isoladamente, tornando o acompanhamento mais preciso.
-	Essa seleção é feita através de um menu localizado na parte superior direito da aplicação, em que 
+	Essa seleção é feita através de um menu localizado na parte superior direita da aplicação, em que 
 	podem ser visualizados todos os pontos do país (opção "BR") ou por estado individualmente.	
 	
 	Quando o usuário entrar em uma área de risco, o aplicativo emitirá um AVISO SONORO informando
